@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>CoreInventory Dashboard</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<h1>CoreInventory</h1>
+<a href="/history">
+<button>View Stock History</button>
+</a>
+<h2>Add Product</h2>
+
+<form action="/add_product" method="POST">
+
+<input name="name" placeholder="Product Name" required>
+
+<input name="sku" placeholder="SKU" required>
+
+<input name="category" placeholder="Category">
+
+<input name="quantity" type="number" placeholder="Quantity">
+
+<button type="submit">Add Product</button>
+
+</form>
+
+<h2>Inventory</h2>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>SKU</th>
+<th>Category</th>
+<th>Stock</th>
+<th>Receive</th>
+<th>Deliver</th>
+</tr>
+
+{% for p in products %}
+
+<tr>
+
+<td>{{p[1]}}</td>
+<td>{{p[2]}}</td>
+<td>{{p[3]}}</td>
+
+<td>
+{{p[4]}}
+
+{% if p[4] < 5 %}
+<span class="low">Low Stock</span>
+{% endif %}
+
+</td>
+
+<td>
+
+<form action="/receive/{{p[0]}}" method="POST">
+
+<input name="qty" type="number" placeholder="+Qty">
+
+<button>Receive</button>
+
+</form>
+
+</td>
+
+<td>
+
+<form action="/deliver/{{p[0]}}" method="POST">
+
+<input name="qty" type="number" placeholder="-Qty">
+
+<button>Deliver</button>
+
+</form>
+
+</td>
+
+<td>
+<a href="/delete/{{p[0]}}">
+<button>Delete</button>
+</a>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>
