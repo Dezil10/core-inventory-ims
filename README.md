@@ -1,1 +1,0 @@
-# core-inventory-ims
